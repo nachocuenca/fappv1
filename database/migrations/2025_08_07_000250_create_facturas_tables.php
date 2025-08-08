@@ -33,8 +33,9 @@ return new class extends Migration
             $table->string('descripcion');
             $table->integer('cantidad')->default(1);
             $table->decimal('precio_unitario', 12, 2)->default(0);
-            $table->decimal('iva', 5, 2)->default(21.00); // porcentaje
-            $table->decimal('total_linea', 12, 2)->default(0);
+            $table->decimal('iva_porcentaje', 5, 2)->default(21);
+            $table->decimal('irpf_porcentaje', 5, 2)->nullable();
+            $table->decimal('subtotal', 14, 2)->default(0);
             $table->timestamps();
         });
     }

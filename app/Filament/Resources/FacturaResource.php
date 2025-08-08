@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FacturaResource\Pages;
 use App\Models\Factura;
+use App\Models\Cliente;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -19,12 +20,50 @@ class FacturaResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
+            Forms\Components\Select::make('cliente_id')
+                ->label('Cliente')
+                ->options(
+                    Cliente::query()
+                        ->when(auth()->check() && !auth()->user()->hasRole('admin'), fn($q) => $q->where('usuario_id', auth()->id()))
+                        ->pluck('nombre', 'id')
+                )
+                ->searchable()
+                ->rules(['required', 'numeric']),
+
+            Forms\Components\TextInput::make('serie')
+                ->maxLength(20)
+                ->required(),
+
+            Forms\Components\TextInput::make('numero')
+                ->required()
+                ->numeric(),
+
+            Forms\Components\DatePicker::make('fecha')
+                ->required(),
+
             Forms\Components\Select::make('estado')
                 ->options([
                     'borrador' => 'Borrador',
                     'enviado' => 'Enviado',
                     'pagado' => 'Pagado',
-                ]),
+                ])
+                ->required(),
+
+            Forms\Components\TextInput::make('base_imponible')
+                ->required()
+                ->numeric(),
+
+            Forms\Components\TextInput::make('iva_total')
+                ->required()
+                ->numeric(),
+
+            Forms\Components\TextInput::make('irpf_total')
+                ->required()
+                ->numeric(),
+
+            Forms\Components\TextInput::make('total')
+                ->required()
+                ->numeric(),
         ]);
     }
 
