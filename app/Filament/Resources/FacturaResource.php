@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use Illuminate\Database\Eloquent\Builder;
 
 class FacturaResource extends Resource
 {
@@ -102,6 +103,13 @@ class FacturaResource extends Resource
                 ExportBulkAction::make(),
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        return auth()->user()?->hasRole('admin') ? $query : $query->mine();
     }
 
     public static function getPages(): array

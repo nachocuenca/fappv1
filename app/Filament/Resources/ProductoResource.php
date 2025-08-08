@@ -71,6 +71,13 @@ class ProductoResource extends Resource
             ]);
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        return auth()->user()?->hasRole('admin') ? $query : $query->mine();
+    }
+
     public static function getPages(): array
     {
         return [
