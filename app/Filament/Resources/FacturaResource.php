@@ -54,19 +54,23 @@ class FacturaResource extends Resource
 
             Forms\Components\TextInput::make('base_imponible')
                 ->required()
-                ->numeric(),
+                ->numeric()
+                ->step(0.01),
 
             Forms\Components\TextInput::make('iva_total')
                 ->required()
-                ->numeric(),
+                ->numeric()
+                ->step(0.01),
 
             Forms\Components\TextInput::make('irpf_total')
                 ->required()
-                ->numeric(),
+                ->numeric()
+                ->step(0.01),
 
             Forms\Components\TextInput::make('total')
                 ->required()
-                ->numeric(),
+                ->numeric()
+                ->step(0.01),
         ]);
     }
 

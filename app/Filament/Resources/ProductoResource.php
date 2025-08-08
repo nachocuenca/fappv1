@@ -29,10 +29,12 @@ class ProductoResource extends Resource
 
             Forms\Components\TextInput::make('precio')
                 ->numeric()
+                ->step(0.01)
                 ->required(),
 
             Forms\Components\TextInput::make('iva_porcentaje')
                 ->numeric()
+                ->step(0.01)
                 ->default(21),
 
             Forms\Components\Toggle::make('activo')

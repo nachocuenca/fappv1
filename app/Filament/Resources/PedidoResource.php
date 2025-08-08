@@ -35,10 +35,10 @@ class PedidoResource extends Resource
             Forms\Components\TextInput::make('serie')->required(),
             Forms\Components\TextInput::make('numero')->numeric()->required(),
             Forms\Components\DatePicker::make('fecha')->default(now())->required(),
-            Forms\Components\TextInput::make('base_imponible')->numeric()->required(),
-            Forms\Components\TextInput::make('iva_total')->numeric()->required(),
-            Forms\Components\TextInput::make('irpf_total')->numeric()->required(),
-            Forms\Components\TextInput::make('total')->numeric()->required(),
+            Forms\Components\TextInput::make('base_imponible')->numeric()->step(0.01)->required(),
+            Forms\Components\TextInput::make('iva_total')->numeric()->step(0.01)->required(),
+            Forms\Components\TextInput::make('irpf_total')->numeric()->step(0.01)->required(),
+            Forms\Components\TextInput::make('total')->numeric()->step(0.01)->required(),
 
             Forms\Components\Select::make('estado')
                 ->options([
