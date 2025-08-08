@@ -15,6 +15,11 @@ class Producto extends Model
         'usuario_id', 'nombre', 'descripcion', 'precio', 'iva_porcentaje', 'activo'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
+
     public function scopeMine($query)
     {
         $user = auth()->user();

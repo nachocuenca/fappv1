@@ -14,8 +14,22 @@ class Presupuesto extends Model
         'base_imponible','iva_total','irpf_total','total'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
+
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
+    }
+
+    public function scopeMine($query)
+    {
+        $user = auth()->user();
+        if ($user && !$user->hasRole('admin')) {
+            $query->where('usuario_id', $user->id);
+        }
+        return $query;
     }
 }

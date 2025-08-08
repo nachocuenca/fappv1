@@ -15,6 +15,11 @@ class Cliente extends Model
         'usuario_id', 'nombre', 'cif', 'email', 'telefono', 'direccion'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
+
     public function scopeMine($query)
     {
         $user = auth()->user();
