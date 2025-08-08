@@ -10,20 +10,23 @@ return new class extends Migration {
         Schema::create('presupuestos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('usuario_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId('cliente_id')->constrained('clientes')->cascadeOnUpdate()->restrictOnDelete();
-            $table->date('fecha')->nullable();
-            $table->unsignedBigInteger('numero')->default(0);
-            $table->string('serie', 20)->default('A');
-            $table->enum('estado', ['borrador','enviado','aceptado','rechazado'])->default('borrador');
+            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->date('fecha');
+            $table->integer('numero');
+            $table->string('serie')->default('PRES');
+            $table->string('estado')->default('pendiente'); // pendiente, aceptado, rechazado
             $table->unsignedInteger('validez_dias')->nullable();
-            $table->text('notas')->nullable();
-            $table->decimal('base_imponible', 14, 2)->default(0);
+            $table->text('observaciones')->nullable();
+            $table->unsignedTinyInteger('activo')->default(1);
+            $table->decimal('iva_porcentaje', 5, 2)->default(21.00);
+            $table->decimal('base_imponible', 10, 2);
             $table->decimal('iva_total', 14, 2)->default(0);
             $table->decimal('irpf_total', 14, 2)->default(0);
-            $table->decimal('total', 14, 2)->default(0);
+            $table->decimal('total', 10, 2);
             $table->timestamps();
             $table->unique(['usuario_id','serie','numero']);
-            $table->index(['usuario_id','cliente_id','estado','fecha']);
+            $table->unique(['serie', 'numero']);
+            $table->index(['usuario_id','cliente_id','estado','fecha', 'activo']);
         });
     }
 

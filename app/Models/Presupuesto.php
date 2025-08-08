@@ -15,10 +15,11 @@ class Presupuesto extends Model
         'fecha',
         'cliente_id',
         'base_imponible',
-        'iva',
+        'iva_porcentaje',
         'total',
         'estado',
         'observaciones',
+        'activo',
     ];
 
     public function cliente()
