@@ -14,11 +14,14 @@ return new class extends Migration {
             $table->date('fecha');
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
             $table->decimal('base_imponible', 10, 2);
-            $table->decimal('iva', 5, 2)->default(21);
+            $table->decimal('iva_porcentaje', 5, 2)->default(21.00);
             $table->decimal('total', 10, 2);
             $table->string('estado')->default('pendiente'); // pendiente, aceptado, rechazado
+            $table->unsignedTinyInteger('activo')->default(1);
             $table->text('observaciones')->nullable();
             $table->timestamps();
+            $table->unique(['serie', 'numero']);
+            $table->index(['cliente_id', 'estado', 'fecha', 'activo']);
         });
     }
 
