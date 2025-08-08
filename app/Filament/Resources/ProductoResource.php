@@ -31,9 +31,12 @@ class ProductoResource extends Resource
                 ->numeric()
                 ->required(),
 
-            Forms\Components\TextInput::make('iva')
+            Forms\Components\TextInput::make('iva_porcentaje')
                 ->numeric()
                 ->default(21),
+
+            Forms\Components\Toggle::make('activo')
+                ->default(true),
         ]);
     }
 
@@ -52,8 +55,11 @@ class ProductoResource extends Resource
                     ->money('eur')
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('iva')
+                Tables\Columns\TextColumn::make('iva_porcentaje')
                     ->sortable(),
+
+                Tables\Columns\IconColumn::make('activo')
+                    ->boolean(),
             ])
             ->filters([])
             ->actions([
