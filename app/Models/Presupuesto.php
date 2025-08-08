@@ -14,6 +14,16 @@ class Presupuesto extends Model
         'base_imponible','iva_total','irpf_total','total'
     ];
 
+    protected $casts = [
+        'fecha' => 'date',
+        'validez_dias' => 'integer',
+        'activo' => 'boolean',
+        'base_imponible' => 'decimal:2',
+        'iva_total' => 'decimal:2',
+        'irpf_total' => 'decimal:2',
+        'total' => 'decimal:2',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'usuario_id');
