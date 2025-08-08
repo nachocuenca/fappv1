@@ -14,6 +14,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use Illuminate\Validation\Rule;
 
 class PresupuestoResource extends Resource
 {
@@ -39,10 +40,13 @@ class PresupuestoResource extends Resource
             Forms\Components\TextInput::make('total')->numeric()->required(),
             Forms\Components\Select::make('estado')
                 ->options([
-                    'pendiente' => 'Pendiente',
+                    'borrador' => 'Borrador',
+                    'enviado' => 'Enviado',
                     'aceptado' => 'Aceptado',
                     'rechazado' => 'Rechazado',
-                ])->default('pendiente'),
+                ])
+                ->default('borrador')
+                ->rules(['required', Rule::in(['borrador', 'enviado', 'aceptado', 'rechazado'])]),
             Forms\Components\Toggle::make('activo')->default(true),
             Forms\Components\Textarea::make('notas'),
         ]);
