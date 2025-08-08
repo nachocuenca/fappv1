@@ -31,12 +31,14 @@ class PresupuestoResource extends Resource
             Forms\Components\TextInput::make('serie')->required(),
             Forms\Components\TextInput::make('numero')->numeric()->required(),
             Forms\Components\DatePicker::make('fecha')->required(),
+            Forms\Components\TextInput::make('validez_dias')->numeric()->nullable(),
             Forms\Components\Select::make('cliente_id')
                 ->relationship('cliente', 'nombre')
                 ->required()
                 ->searchable(),
             Forms\Components\TextInput::make('base_imponible')->numeric()->required(),
             Forms\Components\TextInput::make('iva_total')->numeric()->default(0),
+            Forms\Components\TextInput::make('irpf_total')->numeric()->default(0),
             Forms\Components\TextInput::make('total')->numeric()->required(),
             Forms\Components\Select::make('estado')
                 ->options([
@@ -59,9 +61,11 @@ class PresupuestoResource extends Resource
                 Tables\Columns\TextColumn::make('serie')->sortable(),
                 Tables\Columns\TextColumn::make('numero')->sortable(),
                 Tables\Columns\TextColumn::make('fecha')->date()->sortable(),
+                Tables\Columns\TextColumn::make('validez_dias')->sortable(),
                 Tables\Columns\TextColumn::make('cliente.nombre')->label('Cliente')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('base_imponible')->money('EUR'),
                 Tables\Columns\TextColumn::make('iva_total')->money('EUR'),
+                Tables\Columns\TextColumn::make('irpf_total')->money('EUR'),
                 Tables\Columns\TextColumn::make('total')->money('EUR'),
                 Tables\Columns\TextColumn::make('estado')->badge(),
                 Tables\Columns\IconColumn::make('activo')->boolean(),
