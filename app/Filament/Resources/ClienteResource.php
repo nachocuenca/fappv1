@@ -14,6 +14,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Resources\ClienteResource\Pages;
+use Illuminate\Database\Eloquent\Builder;
 
 class ClienteResource extends Resource
 {
@@ -72,6 +73,13 @@ class ClienteResource extends Resource
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        return auth()->user()?->hasRole('admin') ? $query : $query->mine();
     }
 
     public static function getPages(): array

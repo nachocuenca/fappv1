@@ -81,10 +81,8 @@ class PedidoResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();
-        if (auth()->check() && !auth()->user()->hasRole('admin')) {
-            $query->where('usuario_id', auth()->id());
-        }
-        return $query;
+
+        return auth()->user()?->hasRole('admin') ? $query : $query->mine();
     }
 
     public static function getPages(): array
