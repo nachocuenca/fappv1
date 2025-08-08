@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('presupuesto_id')->nullable()->constrained('presupuestos')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('actuacion_id')->nullable()->constrained('actuaciones')->cascadeOnUpdate()->nullOnDelete();
             $table->string('numero')->unique();
             $table->date('fecha');
             $table->decimal('base_imponible', 12, 2)->default(0);
