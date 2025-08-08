@@ -35,7 +35,7 @@ class PresupuestoResource extends Resource
                 ->required()
                 ->searchable(),
             Forms\Components\TextInput::make('base_imponible')->numeric()->required(),
-            Forms\Components\TextInput::make('iva_porcentaje')->numeric()->default(21),
+            Forms\Components\TextInput::make('iva_total')->numeric()->default(0),
             Forms\Components\TextInput::make('total')->numeric()->required(),
             Forms\Components\Select::make('estado')
                 ->options([
@@ -44,7 +44,7 @@ class PresupuestoResource extends Resource
                     'rechazado' => 'Rechazado',
                 ])->default('pendiente'),
             Forms\Components\Toggle::make('activo')->default(true),
-            Forms\Components\Textarea::make('observaciones'),
+            Forms\Components\Textarea::make('notas'),
         ]);
     }
 
@@ -57,7 +57,7 @@ class PresupuestoResource extends Resource
                 Tables\Columns\TextColumn::make('fecha')->date()->sortable(),
                 Tables\Columns\TextColumn::make('cliente.nombre')->label('Cliente')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('base_imponible')->money('EUR'),
-                Tables\Columns\TextColumn::make('iva_porcentaje')->suffix('%'),
+                Tables\Columns\TextColumn::make('iva_total')->money('EUR'),
                 Tables\Columns\TextColumn::make('total')->money('EUR'),
                 Tables\Columns\TextColumn::make('estado')->badge(),
                 Tables\Columns\IconColumn::make('activo')->boolean(),

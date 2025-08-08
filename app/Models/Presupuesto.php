@@ -10,16 +10,8 @@ class Presupuesto extends Model
     use HasFactory;
 
     protected $fillable = [
-        'serie',
-        'numero',
-        'fecha',
-        'cliente_id',
-        'base_imponible',
-        'iva_porcentaje',
-        'total',
-        'estado',
-        'observaciones',
-        'activo',
+        'usuario_id','cliente_id','fecha','numero','serie','estado','validez_dias','notas','activo',
+        'base_imponible','iva_total','irpf_total','total'
     ];
 
     public function cliente()
