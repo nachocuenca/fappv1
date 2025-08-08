@@ -1,61 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# FAPPv1
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+FAPPv1 es una aplicación web de gestión desarrollada con Laravel 12, Filament v3 y MySQL/MariaDB.
+Permite administrar clientes, productos y documentos comerciales (presupuestos, pedidos, actuaciones y facturas) desde un mismo entorno.
+Incluye generación de documentos con líneas de producto, cálculo automático de impuestos y exportaciones en distintos formatos.
+Pensada para autónomos y pymes que necesitan una herramienta moderna y accesible.
 
-## About Laravel
+## Capturas o GIFs
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Coloca imágenes o animaciones dentro de `/docs/screenshots/` o en `/public/img/` y enlázalas aquí.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Características principales
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Clientes**: creación, edición y eliminación con datos fiscales completos.
+- **Productos/Servicios**: catálogo con precios, IVA/IRPF y gestión opcional de stock.
+- **Presupuestos → Pedidos → Actuaciones → Facturas**: flujo completo con numeración por serie.
+- **Líneas de documento**: múltiples productos/servicios con cantidades, precios y descuentos.
+- **Estados de documento**: borrador, confirmado, pagado o anulado.
+- **Exportaciones**: generación de PDFs y otros formatos.
+- **Totales automáticos**: cálculo de base imponible, IVA, IRPF y total final.
+- **Dashboard**: panel principal con métricas básicas del negocio.
 
-## Learning Laravel
+## Tecnologías utilizadas
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Backend**: Laravel 12 (PHP 8.2)
+- **Admin UI**: Filament v3
+- **Base de datos**: MySQL/MariaDB
+- **Frontend**: Bootstrap 5, DataTables
+- **Otros**: Vite, Laravel Pint/Testing Tools
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Requisitos previos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Recurso       | Versión/Nota                                      |
+|---------------|---------------------------------------------------|
+| PHP           | 8.2+                                              |
+| Composer      | Última versión estable                            |
+| MySQL/MariaDB | Host `127.0.0.1`, puerto `3307`, usuario `root` sin contraseña |
+| Node.js / npm | Para compilar los assets de frontend               |
+| Extensiones PHP | `mbstring`, `openssl`, `pdo`, etc.             |
 
-## Laravel Sponsors
+## Instalación en local
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+# 1. Clonar repositorio
+git clone <url-del-repositorio> fappv1
+cd fappv1
 
-### Premium Partners
+# 2. Instalar dependencias PHP
+composer install
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# 3. Instalar dependencias JS y compilar assets
+npm install && npm run build
 
-## Contributing
+# 4. Configurar entorno
+cp .env.example .env
+# Edita .env con las credenciales de la base de datos:
+# DB_HOST=127.0.0.1
+# DB_PORT=3307
+# DB_DATABASE=fappv1
+# DB_USERNAME=root
+# DB_PASSWORD=
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# 5. Ejecutar migraciones y semillas
+php artisan migrate --seed
 
-## Code of Conduct
+# 6. Usuario administrador de prueba
+# (se crea automáticamente con el seeder: nacho@nacho.es / nacho)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 7. Iniciar el servidor
+php artisan serve
+```
 
-## Security Vulnerabilities
+## Uso básico
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Inicia sesión con `nacho@nacho.es` / `nacho`.
+2. Crea uno o varios **clientes** y **productos**.
+3. Genera **presupuestos**, conviértelos en **pedidos** o **actuaciones** y emite **facturas**.
+4. Descarga o visualiza los documentos generados en PDF u otros formatos.
 
-## License
+## Documentación completa
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- [DOCUMENTACION_TECNICA.md](DOCUMENTACION_TECNICA.md)
+- [CASOS_DE_USO.md](CASOS_DE_USO.md)
+
+## Casos de uso resumidos
+
+- **Emitir una factura**: seleccionar cliente, añadir líneas de producto, confirmar y exportar a PDF.
+- **Registrar un pedido**: convertir un presupuesto existente y hacer seguimiento del estado hasta su entrega.
+- **Gestionar una actuación**: registrar trabajos realizados, gastos asociados y emitir factura final.
+
+## Licencia y créditos
+
+Proyecto bajo licencia **MIT**.
+Autor: **Ignacio Cuenca Moya**.
