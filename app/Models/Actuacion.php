@@ -15,6 +15,7 @@ class Actuacion extends Model
 
     public function cliente() { return $this->belongsTo(Cliente::class); }
     public function pedidos() { return $this->hasMany(Pedido::class); }
+    public function productos() { return $this->hasMany(ActuacionProducto::class); }
     public function facturas() { return $this->belongsToMany(Factura::class, 'actuacion_factura'); }
 
     public function scopeMine($query)
