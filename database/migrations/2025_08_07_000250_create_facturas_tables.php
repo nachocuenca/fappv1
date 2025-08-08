@@ -13,7 +13,6 @@ return new class extends Migration
             $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('presupuesto_id')->nullable()->constrained('presupuestos')->cascadeOnUpdate()->nullOnDelete();
-            $table->foreignId('actuacion_id')->nullable()->constrained('actuaciones')->cascadeOnUpdate()->nullOnDelete();
             $table->unsignedBigInteger('numero')->default(0);
             $table->string('serie', 20)->default('A');
             $table->date('fecha');

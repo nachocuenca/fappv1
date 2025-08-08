@@ -13,7 +13,7 @@ return new class extends Migration {
                 $table->foreignId('actuacion_id')->constrained('actuaciones')->cascadeOnUpdate()->cascadeOnDelete();
                 $table->foreignId('factura_id')->constrained('facturas')->cascadeOnUpdate()->cascadeOnDelete();
                 $table->timestamps();
-                $table->unique(['actuacion_id']);
+                $table->unique(['actuacion_id', 'factura_id']);
                 $table->index(['factura_id']);
             });
         }
