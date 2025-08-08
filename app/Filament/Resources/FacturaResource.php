@@ -18,8 +18,14 @@ class FacturaResource extends Resource
 
     public static function form(Form $form): Form
     {
-        // Facturas se crean desde actuaciones, aquí se deja vacío o con los campos necesarios
-        return $form->schema([]);
+        return $form->schema([
+            Forms\Components\Select::make('estado')
+                ->options([
+                    'borrador' => 'Borrador',
+                    'enviado' => 'Enviado',
+                    'pagado' => 'Pagado',
+                ]),
+        ]);
     }
 
     public static function table(Table $table): Table
