@@ -29,10 +29,11 @@ class PresupuestoSeeder extends Seeder
                 'fecha' => now()->subDays(rand(0, 90)),
                 'cliente_id' => $cliente->id,
                 'base_imponible' => $base,
-                'iva' => $iva,
+                'iva_porcentaje' => $iva,
                 'total' => $total,
                 'estado' => collect(['pendiente', 'aceptado', 'rechazado'])->random(),
                 'observaciones' => 'Observaciones del presupuesto ' . $i,
+                'activo' => 1,
             ]);
         }
     }
