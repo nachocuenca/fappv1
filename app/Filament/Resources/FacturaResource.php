@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Validation\Rule;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class FacturaResource extends Resource
@@ -47,7 +48,8 @@ class FacturaResource extends Resource
                     'enviado' => 'Enviado',
                     'pagado' => 'Pagado',
                 ])
-                ->required(),
+                ->default('borrador')
+                ->rules(['required', Rule::in(['borrador', 'enviado', 'pagado'])]),
 
             Forms\Components\TextInput::make('base_imponible')
                 ->required()
