@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PresupuestoResource\Pages;
 use App\Models\Presupuesto;
+use App\Models\Cliente;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -34,7 +35,14 @@ class PresupuestoResource extends Resource
             Forms\Components\DatePicker::make('fecha')->required(),
             Forms\Components\TextInput::make('validez_dias')->numeric()->nullable(),
             Forms\Components\Select::make('cliente_id')
-                ->relationship('cliente', 'nombre')
+                ->options(
+                    Cliente::query()
+                        ->when(
+                            auth()->check() && !auth()->user()->hasRole('admin'),
+                            fn ($q) => $q->where('usuario_id', auth()->id())
+                        )
+                        ->pluck('nombre', 'id')
+                )
                 ->required()
                 ->searchable(),
             Forms\Components\TextInput::make('base_imponible')->numeric()->step(0.01)->required(),
