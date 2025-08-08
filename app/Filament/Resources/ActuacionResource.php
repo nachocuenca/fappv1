@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ActuacionResource\Pages;
 use App\Models\Actuacion;
 use App\Models\Cliente;
+use App\Filament\Resources\ActuacionResource\RelationManagers\ProductosRelationManager;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -96,14 +97,21 @@ class ActuacionResource extends Resource
         return $query;
     }
 
+    public static function getRelations(): array
+    {
+        return [
+            ProductosRelationManager::class,
+        ];
+    }
+
     public static function getPages(): array
-{
-    return [
-        'index'  => Pages\ListActuaciones::route('/'),
-        'create' => Pages\CreateActuacion::route('/create'),
-        'edit'   => Pages\EditActuacion::route('/{record}/edit'),
-    ];
-}
-	
-	public static function canCreate(): bool { return true; }
+    {
+        return [
+            'index'  => Pages\ListActuaciones::route('/'),
+            'create' => Pages\CreateActuacion::route('/create'),
+            'edit'   => Pages\EditActuacion::route('/{record}/edit'),
+        ];
+    }
+
+    public static function canCreate(): bool { return true; }
 }
