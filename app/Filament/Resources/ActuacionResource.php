@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class ActuacionResource extends Resource
@@ -53,7 +54,8 @@ class ActuacionResource extends Resource
                     'en_proceso'  => 'En proceso',
                     'completada'  => 'Completada',
                 ])
-                ->default('abierta'),
+                ->default('abierta')
+                ->rules(['required', Rule::in(['abierta', 'en_proceso', 'completada'])]),
 
             Forms\Components\Textarea::make('notas')
                 ->rows(3),
