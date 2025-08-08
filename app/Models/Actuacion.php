@@ -13,6 +13,7 @@ class Actuacion extends Model
         'usuario_id','cliente_id','codigo','fecha_inicio','fecha_fin','estado','notas'
     ];
 
+    public function user() { return $this->belongsTo(User::class, 'usuario_id'); }
     public function cliente() { return $this->belongsTo(Cliente::class); }
     public function pedidos() { return $this->hasMany(Pedido::class); }
     public function productos() { return $this->hasMany(ActuacionProducto::class); }
