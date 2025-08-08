@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class PedidoResource extends Resource
@@ -38,10 +39,13 @@ class PedidoResource extends Resource
 
             Forms\Components\Select::make('estado')
                 ->options([
-                    'borrador'  => 'Borrador',
-                    'abierto'   => 'Abierto',
-                    'cerrado'   => 'Cerrado',
-                ])->default('borrador'),
+                    'borrador'   => 'Borrador',
+                    'confirmado' => 'Confirmado',
+                    'servido'    => 'Servido',
+                    'cerrado'    => 'Cerrado',
+                ])
+                ->default('borrador')
+                ->rules(['required', Rule::in(['borrador', 'confirmado', 'servido', 'cerrado'])]),
 
             Forms\Components\Textarea::make('notas')->rows(3),
         ]);
