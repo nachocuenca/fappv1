@@ -10,11 +10,14 @@ class Factura extends Model
     use HasFactory;
 
     protected $fillable = [
-        'usuario_id','cliente_id','fecha','numero','serie','estado','notas',
+        'usuario_id','cliente_id','presupuesto_id','actuacion_id',
+        'fecha','numero','serie','estado','notas',
         'base_imponible','iva_total','irpf_total','total'
     ];
 
     public function cliente() { return $this->belongsTo(Cliente::class); }
+    public function presupuesto() { return $this->belongsTo(Presupuesto::class); }
+    public function actuacion() { return $this->belongsTo(Actuacion::class); }
     public function lineas() { return $this->hasMany(FacturaProducto::class); }
     public function actuaciones() { return $this->belongsToMany(Actuacion::class, 'actuacion_factura'); }
 
