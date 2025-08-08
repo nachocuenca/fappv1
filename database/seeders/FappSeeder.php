@@ -49,8 +49,6 @@ DB::table('presupuestos')
         ], [
             'descripcion' => 'Hora de técnico',
             'precio' => 35,
-            'iva_porcentaje' => 21,
-            'activo' => true,
         ]);
 
         $p2 = Producto::firstOrCreate([
@@ -59,8 +57,6 @@ DB::table('presupuestos')
         ], [
             'descripcion' => 'Aire acondicionado split 3.0kW',
             'precio' => 599,
-            'iva_porcentaje' => 21,
-            'activo' => true,
         ]);
 
 
@@ -74,6 +70,13 @@ DB::table('presupuestos')
     ->delete();
 
         // Presupuesto demo con líneas
+        $manoObraSubtotal = 2 * 35;
+        $splitSubtotal = 1 * 599;
+        $base = $manoObraSubtotal + $splitSubtotal;
+        $ivaTotal = round($base * 0.21, 2);
+        $irpfTotal = 0;
+        $total = $base + $ivaTotal - $irpfTotal;
+
         $pres = Presupuesto::create([
             'usuario_id' => $admin->id,
             'cliente_id' => $c->id,
@@ -82,6 +85,10 @@ DB::table('presupuestos')
             'serie' => 'A',
             'estado' => 'borrador',
             'notas' => 'Presupuesto de ejemplo',
+            'base_imponible' => $base,
+            'iva_total' => $ivaTotal,
+            'irpf_total' => $irpfTotal,
+            'total' => $total,
         ]);
 
         PresupuestoProducto::create([
@@ -90,8 +97,7 @@ DB::table('presupuestos')
             'descripcion' => 'Mano de obra',
             'cantidad' => 2,
             'precio_unitario' => 35,
-            'iva_porcentaje' => 21,
-            'subtotal' => 70,
+            'subtotal' => $manoObraSubtotal,
         ]);
 
         PresupuestoProducto::create([
@@ -100,8 +106,10 @@ DB::table('presupuestos')
             'descripcion' => 'Split AC 3000fg',
             'cantidad' => 1,
             'precio_unitario' => 599,
-            'iva_porcentaje' => 21,
-            'subtotal' => 599,
+            'subtotal' => $splitSubtotal,
         ]);
+
+        // Semillas adicionales
+        $this->call(PresupuestoSeeder::class);
     }
 }

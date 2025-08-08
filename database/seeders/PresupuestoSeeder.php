@@ -20,20 +20,22 @@ class PresupuestoSeeder extends Seeder
         foreach (range(1, 15) as $i) {
             $cliente = $clientes->random();
             $base = rand(100, 2000);
-            $iva = 21;
-            $total = $base + ($base * $iva / 100);
+            $ivaTotal = round($base * 0.21, 2);
+            $irpfTotal = 0;
+            $total = $base + $ivaTotal - $irpfTotal;
 
             Presupuesto::create([
+                'usuario_id' => $cliente->usuario_id,
                 'serie' => 'PRES',
                 'numero' => $i,
                 'fecha' => now()->subDays(rand(0, 90)),
                 'cliente_id' => $cliente->id,
                 'base_imponible' => $base,
-                'iva_porcentaje' => $iva,
+                'iva_total' => $ivaTotal,
+                'irpf_total' => $irpfTotal,
                 'total' => $total,
-                'estado' => collect(['pendiente', 'aceptado', 'rechazado'])->random(),
-                'observaciones' => 'Observaciones del presupuesto ' . $i,
-                'activo' => 1,
+                'estado' => collect(['borrador', 'enviado', 'aceptado', 'rechazado'])->random(),
+                'notas' => 'Notas del presupuesto ' . $i,
             ]);
         }
     }
