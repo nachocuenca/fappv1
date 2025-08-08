@@ -32,10 +32,13 @@ class PedidoResource extends Resource
                 ->searchable()
                 ->required(),
 
-            Forms\Components\TextInput::make('codigo')
-                ->maxLength(50),
-
+            Forms\Components\TextInput::make('serie')->required(),
+            Forms\Components\TextInput::make('numero')->numeric()->required(),
             Forms\Components\DatePicker::make('fecha')->default(now())->required(),
+            Forms\Components\TextInput::make('base_imponible')->numeric()->required(),
+            Forms\Components\TextInput::make('iva_total')->numeric()->required(),
+            Forms\Components\TextInput::make('irpf_total')->numeric()->required(),
+            Forms\Components\TextInput::make('total')->numeric()->required(),
 
             Forms\Components\Select::make('estado')
                 ->options([
@@ -55,11 +58,15 @@ class PedidoResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('codigo')->label('Código')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('serie')->sortable(),
+                Tables\Columns\TextColumn::make('numero')->sortable(),
                 Tables\Columns\TextColumn::make('cliente.nombre')->label('Cliente')->searchable(),
                 Tables\Columns\TextColumn::make('fecha')->date('d/m/Y')->sortable(),
-                Tables\Columns\TextColumn::make('estado')->badge()->sortable(),
+                Tables\Columns\TextColumn::make('base_imponible')->money('eur')->sortable(),
+                Tables\Columns\TextColumn::make('iva_total')->money('eur')->sortable(),
+                Tables\Columns\TextColumn::make('irpf_total')->money('eur')->sortable(),
                 Tables\Columns\TextColumn::make('total')->money('eur')->sortable(),
+                Tables\Columns\TextColumn::make('estado')->badge()->sortable(),
             ])
             ->filters([])
             ->actions([
