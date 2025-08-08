@@ -24,21 +24,26 @@ class ProductosRelationManager extends RelationManager
                 ->required(),
             Forms\Components\TextInput::make('cantidad')
                 ->numeric()
+                ->step(0.001)
                 ->default(1)
                 ->required(),
             Forms\Components\TextInput::make('precio_unitario')
                 ->numeric()
+                ->step(0.01)
                 ->default(0)
                 ->required(),
             Forms\Components\TextInput::make('iva_porcentaje')
                 ->numeric()
+                ->step(0.01)
                 ->default(21)
                 ->required(),
             Forms\Components\TextInput::make('irpf_porcentaje')
                 ->numeric()
+                ->step(0.01)
                 ->nullable(),
             Forms\Components\TextInput::make('subtotal')
                 ->numeric()
+                ->step(0.01)
                 ->default(0)
                 ->required(),
         ]);

@@ -19,10 +19,10 @@ return new class extends Migration {
             $table->text('observaciones')->nullable();
             $table->unsignedTinyInteger('activo')->default(1);
             $table->decimal('iva_porcentaje', 5, 2)->default(21.00);
-            $table->decimal('base_imponible', 10, 2);
+            $table->decimal('base_imponible', 14, 2);
             $table->decimal('iva_total', 14, 2)->default(0);
             $table->decimal('irpf_total', 14, 2)->default(0);
-            $table->decimal('total', 10, 2);
+            $table->decimal('total', 14, 2);
             $table->timestamps();
             $table->unique(['usuario_id','serie','numero']);
             $table->unique(['serie', 'numero']);

@@ -36,10 +36,10 @@ class PresupuestoResource extends Resource
                 ->relationship('cliente', 'nombre')
                 ->required()
                 ->searchable(),
-            Forms\Components\TextInput::make('base_imponible')->numeric()->required(),
-            Forms\Components\TextInput::make('iva_total')->numeric()->default(0),
-            Forms\Components\TextInput::make('irpf_total')->numeric()->default(0),
-            Forms\Components\TextInput::make('total')->numeric()->required(),
+            Forms\Components\TextInput::make('base_imponible')->numeric()->step(0.01)->required(),
+            Forms\Components\TextInput::make('iva_total')->numeric()->step(0.01)->default(0),
+            Forms\Components\TextInput::make('irpf_total')->numeric()->step(0.01)->default(0),
+            Forms\Components\TextInput::make('total')->numeric()->step(0.01)->required(),
             Forms\Components\Select::make('estado')
                 ->options([
                     'borrador' => 'Borrador',
