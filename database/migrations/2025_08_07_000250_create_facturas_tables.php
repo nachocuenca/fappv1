@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('numero')->default(0);
             $table->string('serie', 20)->default('A');
             $table->date('fecha');
-            $table->enum('estado', ['borrador', 'emitida', 'pagada'])->default('borrador');
+            $table->enum('estado', ['borrador', 'enviado', 'pagado'])->default('borrador');
             $table->text('notas')->nullable();
             $table->decimal('base_imponible', 14, 2)->default(0);
             $table->decimal('iva_total', 14, 2)->default(0);
