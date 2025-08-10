@@ -23,6 +23,7 @@ class ActuacionResource extends Resource
 	protected static ?string $modelLabel        = 'Actuación';
 	protected static ?string $pluralModelLabel  = 'Actuaciones';
 	protected static ?string $slug              = 'actuaciones'; // <- URL /admin/actuaciones
+	protected static ?int $navigationSort = 50;
 
     public static function form(Form $form): Form
     {
@@ -59,6 +60,9 @@ class ActuacionResource extends Resource
 
             Forms\Components\Textarea::make('notas')
                 ->rows(3),
+				
+			Forms\Components\Hidden::make('usuario_id')
+				->default(fn () => auth()->id()),
         ]);
     }
 
@@ -90,12 +94,6 @@ class ActuacionResource extends Resource
             ]);
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        $query = parent::getEloquentQuery();
-
-        return auth()->user()?->hasRole('admin') ? $query : $query->mine();
-    }
 
     public static function getRelations(): array
     {

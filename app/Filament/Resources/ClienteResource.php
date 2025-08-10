@@ -24,10 +24,15 @@ class ClienteResource extends Resource
     protected static ?string $navigationLabel = 'Clientes';
     protected static ?string $pluralLabel = 'Clientes';
     protected static ?string $modelLabel = 'Cliente';
+	protected static ?int $navigationSort = 10;
 
     public static function form(Form $form): Form
     {
         return $form->schema([
+			Forms\Components\Hidden::make('usuario_id')
+                ->default(function () {
+                    return auth()->id();
+                }),
             Forms\Components\TextInput::make('nombre')
                 ->label('Nombre')
                 ->required()
@@ -46,6 +51,8 @@ class ClienteResource extends Resource
                 ->label('Email')
                 ->email()
                 ->maxLength(255),
+			Forms\Components\Hidden::make('usuario_id')
+				->default(fn () => auth()->id()),
         ]);
     }
 
@@ -73,13 +80,6 @@ class ClienteResource extends Resource
                     DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        $query = parent::getEloquentQuery();
-
-        return auth()->user()?->hasRole('admin') ? $query : $query->mine();
     }
 
     public static function getPages(): array

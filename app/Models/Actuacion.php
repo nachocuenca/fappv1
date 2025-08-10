@@ -19,12 +19,4 @@ class Actuacion extends Model
     public function productos() { return $this->hasMany(ActuacionProducto::class); }
     public function facturas() { return $this->belongsToMany(Factura::class, 'actuacion_factura'); }
 
-    public function scopeMine($query)
-    {
-        $user = auth()->user();
-        if ($user && !$user->hasRole('admin')) {
-            $query->where('usuario_id', $user->id);
-        }
-        return $query;
-    }
 }

@@ -18,6 +18,7 @@ class FacturaResource extends Resource
 {
     protected static ?string $model = Factura::class;
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
+	protected static ?int $navigationSort = 60;
 
     public static function form(Form $form): Form
     {
@@ -71,6 +72,8 @@ class FacturaResource extends Resource
                 ->required()
                 ->numeric()
                 ->step(0.01),
+							Forms\Components\Hidden::make('usuario_id')
+				->default(fn () => auth()->id()),
         ]);
     }
 
@@ -111,12 +114,6 @@ class FacturaResource extends Resource
             ]);
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        $query = parent::getEloquentQuery();
-
-        return auth()->user()?->hasRole('admin') ? $query : $query->mine();
-    }
 
     public static function getPages(): array
     {

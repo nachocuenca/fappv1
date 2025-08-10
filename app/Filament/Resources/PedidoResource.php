@@ -18,6 +18,7 @@ class PedidoResource extends Resource
 {
     protected static ?string $model = Pedido::class;
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
+	protected static ?int $navigationSort = 40;
 
     public static function form(Form $form): Form
     {
@@ -39,6 +40,8 @@ class PedidoResource extends Resource
             Forms\Components\TextInput::make('iva_total')->numeric()->step(0.01)->required(),
             Forms\Components\TextInput::make('irpf_total')->numeric()->step(0.01)->required(),
             Forms\Components\TextInput::make('total')->numeric()->step(0.01)->required(),
+						Forms\Components\Hidden::make('usuario_id')
+				->default(fn () => auth()->id()),
 
             Forms\Components\Select::make('estado')
                 ->options([
@@ -78,12 +81,7 @@ class PedidoResource extends Resource
             ]);
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        $query = parent::getEloquentQuery();
 
-        return auth()->user()?->hasRole('admin') ? $query : $query->mine();
-    }
 
     public static function getPages(): array
     {

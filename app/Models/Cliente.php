@@ -20,12 +20,4 @@ class Cliente extends Model
         return $this->belongsTo(User::class, 'usuario_id');
     }
 
-    public function scopeMine($query)
-    {
-        $user = auth()->user();
-        if ($user && !$user->hasRole('admin')) {
-            $query->where('usuario_id', $user->id);
-        }
-        return $query;
-    }
 }

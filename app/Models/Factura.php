@@ -21,12 +21,4 @@ class Factura extends Model
     public function lineas() { return $this->hasMany(FacturaProducto::class); }
     public function actuaciones() { return $this->belongsToMany(Actuacion::class, 'actuacion_factura'); }
 
-    public function scopeMine($query)
-    {
-        $user = auth()->user();
-        if ($user && !$user->hasRole('admin')) {
-            $query->where('usuario_id', $user->id);
-        }
-        return $query;
-    }
 }
