@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS presupuestos;
 DROP TABLE IF EXISTS series;
 DROP TABLE IF EXISTS productos;
 DROP TABLE IF EXISTS clientes;
+DROP TABLE IF EXISTS budgets;
 DROP TABLE IF EXISTS role_has_permissions;
 DROP TABLE IF EXISTS model_has_roles;
 DROP TABLE IF EXISTS model_has_permissions;
@@ -215,6 +216,21 @@ CREATE TABLE series (
     updated_at TIMESTAMP NULL DEFAULT NULL,
     UNIQUE KEY series_usuario_tipo_serie_unique (usuario_id, tipo, serie),
     CONSTRAINT series_usuario_id_foreign FOREIGN KEY (usuario_id) REFERENCES users(id)
+        ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Budgets
+CREATE TABLE budgets (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    usuario_id BIGINT UNSIGNED NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
+    monto DECIMAL(14,2) NOT NULL,
+    descripcion TEXT NULL,
+    activo TINYINT(1) NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NULL DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT NULL,
+    INDEX budgets_usuario_id_activo_index (usuario_id, activo),
+    CONSTRAINT budgets_usuario_id_foreign FOREIGN KEY (usuario_id) REFERENCES users(id)
         ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -446,3 +462,4 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- DELETE FROM series;
 -- DELETE FROM productos;
 -- DELETE FROM clientes;
+-- DELETE FROM budgets;
