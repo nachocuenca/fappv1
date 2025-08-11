@@ -234,6 +234,26 @@ CREATE TABLE budgets (
         ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Budget products
+CREATE TABLE budget_products (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    budget_id BIGINT UNSIGNED NOT NULL,
+    producto_id BIGINT UNSIGNED NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    cantidad DECIMAL(12,3) NOT NULL DEFAULT 1,
+    precio_unitario DECIMAL(14,2) NOT NULL DEFAULT 0,
+    iva_porcentaje DECIMAL(5,2) NOT NULL DEFAULT 21.00,
+    irpf_porcentaje DECIMAL(5,2) NULL,
+    subtotal DECIMAL(14,2) NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NULL DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT NULL,
+    INDEX budget_products_budget_id_index (budget_id),
+    CONSTRAINT budget_products_budget_id_foreign FOREIGN KEY (budget_id) REFERENCES budgets(id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT budget_products_producto_id_foreign FOREIGN KEY (producto_id) REFERENCES productos(id)
+        ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Presupuestos
 CREATE TABLE presupuestos (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
