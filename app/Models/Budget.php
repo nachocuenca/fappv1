@@ -15,19 +15,42 @@ class Budget extends Model
 
     protected $fillable = [
         'usuario_id',
-        'nombre',
-        'monto',
-        'descripcion',
+        'cliente_id',
+        'fecha',
+        'numero',
+        'serie',
+        'estado',
+        'validez_dias',
+        'notas',
         'activo',
+        'base_imponible',
+        'iva_total',
+        'irpf_total',
+        'total',
     ];
 
     protected $casts = [
-        'monto' => 'decimal:2',
-        'activo' => 'boolean',
+        'fecha'          => 'date',
+        'validez_dias'   => 'integer',
+        'activo'         => 'boolean',
+        'base_imponible' => 'decimal:2',
+        'iva_total'      => 'decimal:2',
+        'irpf_total'     => 'decimal:2',
+        'total'          => 'decimal:2',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'usuario_id');
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
+
+    public function lineas()
+    {
+        return $this->hasMany(BudgetProduct::class, 'budget_id');
     }
 }
