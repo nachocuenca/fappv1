@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         if (! Schema::hasTable('clientes')) {
             Schema::create('clientes', function (Blueprint $table) {
-                $table->bigIncrements('id'); // BIGINT UNSIGNED PK
-                $table->foreignId('id')
+                $table->id();
+                $table->foreignId('usuario_id')
                     ->constrained('users')
                     ->cascadeOnUpdate()
                     ->restrictOnDelete();
